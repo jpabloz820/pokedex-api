@@ -30,20 +30,20 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build docker image
-        run: docker build -t intergardrionninjas/pokedex-api .
+        run: docker build -t soyjp8/pokedex-api .
 
       - name: Publish image to Docker Hub
-        run: docker push intergardrionninjas/pokedex-api:latest
+        run: docker push soyjp8/pokedex-api:latest
 
   deploy:
     needs: build
     runs-on: aws-ec2
     steps:
       - name: Pull Image from Docker Hub
-        run: docker pull intergardrionninjas/pokedex-api:latest
+        run: docker pull soyjp8/pokedex-api:latest
 
       - name: Delete old container
         run: docker rm -f pokedex-api-container || true
 
       - name: Run Docker container
-        run: docker run -d -p 8080:8080 --name pokedex-api-container intergardrionninjas/pokedex-api
+        run: docker run -d -p 8080:8080 --name pokedex-api-container soyjp8/pokedex-api
