@@ -13,7 +13,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin
+          distribution: 'temurin'
           java-version: '17'
       - name: build project
         run: mvn clean  install -DskipTest
@@ -23,6 +23,7 @@ jobs:
         run: docker build -t intergardrionninjas/pokedex-api .
       - name: Publish image to docker hub
         run: docker push intergardrionninjas/pokedex-api:latest
+
 
   deploy:
     needs: build
