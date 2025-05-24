@@ -25,18 +25,15 @@ jobs:
       - name: Build project
         run: mvn clean install -DskipTests
         working-directory: ./pokedex-api
-        
 
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build docker image
-        run: docker build -t intergardrionninjas/pokedex-api -f pokedex-api/Dockerfile .
-
+        run: docker build -t intergardrionninjas/pokedex-api -f Dockerfile .
 
       - name: Publish image to Docker Hub
         run: docker push intergardrionninjas/pokedex-api:latest
-        working-directory: ./pokedex-api
 
   deploy:
     needs: build
