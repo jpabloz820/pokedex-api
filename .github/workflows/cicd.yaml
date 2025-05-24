@@ -9,39 +9,40 @@ permissions:
   id-token: write
   contents: read
 
-
 jobs:
   build:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
-      - name: checkoout source
+      - name: Checkout source
         uses: actions/checkout@v3
+
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: build project
-        run: mvn clean  install -DskipTest
-      - name: Login to docker hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-      - name: Build docker image
-        run: docker build -t intergardrionninjas/pokedex-api .
-      - name: Publish image to docker hub
-        run: docker push intergardrionninjas/pokedex-api:latest
 
+      - name: Build project
+        run: mvn clean install -DskipTests
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build -t intergardrionninjas/pokedex-api .
+
+      - name: Publish image to Docker Hub
+        run: docker push intergardrionninjas/pokedex-api:latest
 
   deploy:
     needs: build
-    runs-on: [aws-ec2]
+    runs-on: aws-ec2
     steps:
-      - name: Pull Image from docker hub
+      - name: Pull Image from Docker Hub
         run: docker pull intergardrionninjas/pokedex-api:latest
+
       - name: Delete old container
-        run: docker rm -f pokedex-api-container
-      - name: Run docker container
+        run: docker rm -f pokedex-api-container || true
+
+      - name: Run Docker container
         run: docker run -d -p 8080:8080 --name pokedex-api-container intergardrionninjas/pokedex-api
-
-
-
-
