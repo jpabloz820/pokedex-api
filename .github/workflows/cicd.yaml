@@ -1,8 +1,14 @@
 name: CICD
 
 on:
+  workflow_dispatch:
   push:
-    branches: [deploy-yo-ec2]
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+
 
 jobs:
   build:
