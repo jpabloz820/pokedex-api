@@ -24,6 +24,7 @@ jobs:
       - name: Publish image to docker hub
         run: docker push intergardrionninjas/pokedex-api:latest
 
+
   deploy:
     needs: build
     runs-on: [aws-ec2]
