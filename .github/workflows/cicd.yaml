@@ -32,9 +32,11 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t intergardrionninjas/pokedex-api .
+        working-directory: ./pokedex-api
 
       - name: Publish image to Docker Hub
         run: docker push intergardrionninjas/pokedex-api:latest
+        working-directory: ./pokedex-api
 
   deploy:
     needs: build
