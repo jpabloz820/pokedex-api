@@ -30,7 +30,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build docker image
-        run: docker build -t intergardrionninjas/pokedex-api -f Dockerfile .
+        run: docker build -t intergardrionninjas/pokedex-api .
 
       - name: Publish image to Docker Hub
         run: docker push intergardrionninjas/pokedex-api:latest
