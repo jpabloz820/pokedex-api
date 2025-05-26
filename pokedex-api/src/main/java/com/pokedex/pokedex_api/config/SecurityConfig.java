@@ -7,6 +7,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import com.pokedex.pokedex_api.services.UserDetailsServiceImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,12 +64,12 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:4200"); // Tu frontend
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
         configuration.addAllowedMethod("*"); // GET, POST, PUT, DELETE, etc.
         configuration.addAllowedHeader("*"); // Headers como Content-Type, Authorization
         configuration.setAllowCredentials(true); // Si usas cookies o auth básica
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/", configuration);
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }
