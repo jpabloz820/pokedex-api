@@ -62,14 +62,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://bucket-pokedex-front.s3-website.us-east-2.amazonaws.com"));
-        configuration.addAllowedMethod("*"); // GET, POST, PUT, DELETE, etc.
-        configuration.addAllowedHeader("*"); // Headers como Content-Type, Authorization
-        configuration.setAllowCredentials(true); // Si usas cookies o auth básica
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(List.of(
+        "http://bucket-pokedex-front.s3-website.us-east-2.amazonaws.com",
+        "http://localhost:4200"
+    ));
+    configuration.addAllowedMethod("*"); // GET, POST, PUT, DELETE, etc.
+    configuration.addAllowedHeader("*"); // Headers como Content-Type, Authorization
+    configuration.setAllowCredentials(true); // Si usas cookies o auth básica
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+}
+
 }
